@@ -56,9 +56,16 @@ int16_t getJoystickVerticalValue() {
 #endif
 }
 
+void updateLeds() {
+  uint8_t val = registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS];
+  digitalWrite(LED_1, ((val & 0b0001) != 0));
+  digitalWrite(LED_2, ((val & 0b0010) != 0));
+}
+
 void onReceive(int howMany) {
   Serial.print("onReceive:");
   uint8_t receivedLen = 0;
+  boolean changedLedsRegister = false;
   while (0 < Wire.available()) {
     uint8_t v = Wire.read();
     Serial.print(" ");
@@ -68,8 +75,12 @@ void onReceive(int howMany) {
     } else if (receivedLen == 1) {
       if (registerIndex == WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS) {
         registers[registerIndex] = v;
+        changedLedsRegister = true;
       }
     }
+  }
+  if (changedLedsRegister) {
+    updateLeds();
   }
   Serial.println("");
 }
@@ -81,14 +92,21 @@ void onRequest() {
 }
 
 void setup() {
-  Wire.begin(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
-  Wire.onReceive(onReceive);
-  Wire.onRequest(onRequest);
   pinMode(BTN_TOP, INPUT_PULLUP);
   pinMode(BTN_LEFT, INPUT_PULLUP);
   pinMode(BTN_RIGHT, INPUT_PULLUP);
   pinMode(BTN_BOTTOM, INPUT_PULLUP);
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+
   Serial.begin(115200);
+
+  registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS] = 0;
+  updateLeds();
+
+  Wire.begin(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
+  Wire.onReceive(onReceive);
+  Wire.onRequest(onRequest);
 }
 
 void updateJoystickRegisters() {
