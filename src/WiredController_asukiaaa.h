@@ -33,8 +33,8 @@ typedef struct {
 class WiredController_asukiaaa {
  public:
   WiredController_asukiaaa(TwoWire* wire);
-  uint8_t writeInfo(WiredController_asukiaaa_WriteInfo wInfo);
-  uint8_t readInfo(WiredController_asukiaaa_ReadInfo *rInfo);
+  uint8_t write(WiredController_asukiaaa_WriteInfo wInfo);
+  uint8_t read(WiredController_asukiaaa_ReadInfo *rInfo);
 
  private:
   TwoWire* wire;

@@ -4,14 +4,14 @@ WiredController_asukiaaa::WiredController_asukiaaa(TwoWire* wire) {
   this->wire = wire;
 }
 
-uint8_t WiredController_asukiaaa::writeInfo(WiredController_asukiaaa_WriteInfo wInfo) {
+uint8_t WiredController_asukiaaa::write(WiredController_asukiaaa_WriteInfo wInfo) {
   wire->beginTransmission(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
   wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS);
   wire->write(wInfo.led1 ? 1 : 0);
   return wire->endTransmission();
 }
 
-uint8_t WiredController_asukiaaa::readInfo(WiredController_asukiaaa_ReadInfo *rInfo) {
+uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo) {
   wire->beginTransmission(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
   wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_BUTTONS);
   uint8_t result = wire->endTransmission();
