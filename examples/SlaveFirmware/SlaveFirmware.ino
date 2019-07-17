@@ -20,6 +20,8 @@
 
 #define REGISTER_LEN 0x06
 
+// #define DEBUG
+
 uint8_t registers[REGISTER_LEN];
 uint8_t registerIndex = 0;
 
@@ -63,13 +65,17 @@ void updateLeds() {
 }
 
 void onReceive(int howMany) {
+#ifdef DEBUG
   Serial.print("onReceive:");
+#endif
   uint8_t receivedLen = 0;
   boolean changedLedsRegister = false;
   while (0 < Wire.available()) {
     uint8_t v = Wire.read();
+#ifdef DEBUG
     Serial.print(" ");
     Serial.print(v, HEX);
+#endif
     if (receivedLen == 0) {
       registerIndex = v;
     } else if (receivedLen == 1) {
@@ -82,7 +88,9 @@ void onReceive(int howMany) {
   if (changedLedsRegister) {
     updateLeds();
   }
+#ifdef DEBUG
   Serial.println("");
+#endif
 }
 
 void onRequest() {
@@ -99,7 +107,9 @@ void setup() {
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
 
+#ifdef DEBUG
   Serial.begin(115200);
+#endif
 
   registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS] = 0;
   updateLeds();
