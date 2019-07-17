@@ -14,8 +14,16 @@ void setup() {
   wroteAt = millis();
   wInfo.led1 = false;
   wroteAt = millis();
-  if (controller.writeInfo(wInfo) != 0) {
+  if (controller.write(wInfo) != 0) {
     Serial.println("Failed to initial writing");
+  }
+}
+
+void printBooleanResult(bool target) {
+  if (target) {
+    Serial.print("true");
+  } else {
+    Serial.print("false");
   }
 }
 
@@ -23,27 +31,23 @@ void loop() {
   if (millis() - wroteAt > WRITE_INTERVAL_MS) {
     wroteAt = millis();
     wInfo.led1 = !wInfo.led1;
-    if (controller.writeInfo(wInfo) == 0) {
+    if (controller.write(wInfo) == 0) {
       Serial.println("Wrote info to controller.");
     } else {
       Serial.println("Cannot write info to controller.");
     }
   }
-  if (controller.readInfo(&rInfo) == 0) {
+  if (controller.read(&rInfo) == 0) {
     Serial.println("JoystickHorizontal: " + String(rInfo.joystickHorizontal));
     Serial.println("JoystickVertical: " + String(rInfo.joystickVertical));
-    Serial.print("btn1: ");
-    if (rInfo.btn1) {
-      Serial.println("true");
-    } else {
-      Serial.println("false");
-    }
-    Serial.print("btn2: ");
-    if (rInfo.btn1) {
-      Serial.println("true");
-    } else {
-      Serial.println("false");
-    }
+    Serial.print("btnTop: ");
+    printBooleanResult(rInfo.btnTop);
+    Serial.print("btnLeft: ");
+    printBooleanResult(rInfo.btnLeft);
+    Serial.print("btnRight: ");
+    printBooleanResult(rInfo.btnRight);
+    Serial.print("btnBottom: ");
+    printBooleanResult(rInfo.btnBottom);
   } else {
     Serial.println("Cannot read info from controller.");
   }
