@@ -1,8 +1,12 @@
 #include <Wire.h>
 #include <WiredController_asukiaaa.h>
 
-#define BTN_1 4
-#define BTN_2 5
+#define BTN_TOP    4
+#define BTN_LEFT   5
+#define BTN_RIGHT  6
+#define BTN_BOTTOM 7
+#define LED_1 8
+#define LED_2 9
 #define JOYSTICK_HORIZONTAL_MIDDLE A0
 #define JOYSTICK_HORIZONTAL_UPPER A1
 // #define JOYSTICK_HORIZONTAL_REVERSE
@@ -80,8 +84,10 @@ void setup() {
   Wire.begin(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
   Wire.onReceive(onReceive);
   Wire.onRequest(onRequest);
-  pinMode(BTN_1, INPUT_PULLUP);
-  pinMode(BTN_2, INPUT_PULLUP);
+  pinMode(BTN_TOP, INPUT_PULLUP);
+  pinMode(BTN_LEFT, INPUT_PULLUP);
+  pinMode(BTN_RIGHT, INPUT_PULLUP);
+  pinMode(BTN_BOTTOM, INPUT_PULLUP);
   Serial.begin(115200);
 }
 
@@ -98,12 +104,10 @@ void updateJoystickRegisters() {
 
 void updateButtonRegister() {
   uint8_t val = 0x00;
-  if (pushed(BTN_1)) {
-    val |= B0001;
-  }
-  if (pushed(BTN_2)) {
-    val |= B0010;
-  }
+  if (pushed(BTN_TOP))    val |= 0b0001;
+  if (pushed(BTN_LEFT))   val |= 0b0010;
+  if (pushed(BTN_RIGHT))  val |= 0b0100;
+  if (pushed(BTN_BOTTOM)) val |= 0b1000;
   registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_BUTTONS] = val;
 }
 

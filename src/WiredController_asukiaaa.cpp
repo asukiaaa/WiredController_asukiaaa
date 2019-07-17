@@ -44,8 +44,10 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
 #endif
 
   uint8_t buttons = buff[0];
-  rInfo->btn1 = ((buttons & 0x01) != 0);
-  rInfo->btn2 = ((buttons & 0x02) != 0);
+  rInfo->btnTop     = ((buttons & 0b0001) != 0);
+  rInfo->btnLeft    = ((buttons & 0b0010) != 0);
+  rInfo->btnRight   = ((buttons & 0b0100) != 0);
+  rInfo->btnBottom  = ((buttons & 0b1000) != 0);
   rInfo->joystickVertical = ((uint16_t) buff[1]) << 8 | (uint16_t) buff[2];
   rInfo->joystickHorizontal = ((uint16_t) buff[3]) << 8 | (uint16_t) buff[4];
 

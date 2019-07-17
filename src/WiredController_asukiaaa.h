@@ -22,12 +22,15 @@
 typedef struct {
   uint16_t joystickHorizontal;
   uint16_t joystickVertical;
-  bool btn1;
-  bool btn2;
+  bool btnTop;
+  bool btnLeft;
+  bool btnRight;
+  bool btnBottom;
 } WiredController_asukiaaa_ReadInfo;
 
 typedef struct {
   bool led1;
+  bool led2;
 } WiredController_asukiaaa_WriteInfo;
 
 class WiredController_asukiaaa {
