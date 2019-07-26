@@ -78,12 +78,14 @@ void onReceive(int howMany) {
 #endif
     if (receivedLen == 0) {
       registerIndex = v;
-    } else if (receivedLen == 1) {
+    } else {
       if (registerIndex == WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS) {
         registers[registerIndex] = v;
         changedLedsRegister = true;
       }
+      ++registerIndex;
     }
+    ++receivedLen;
   }
   if (changedLedsRegister) {
     updateLeds();
