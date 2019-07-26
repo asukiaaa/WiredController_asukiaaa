@@ -22,9 +22,7 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
   uint8_t buff[buffLen];
   uint8_t buffIndex = 0;
   uint8_t receiveLen = wire->requestFrom(WIRED_CONTROLLER_ASUKIAAA_ADDRESS, (int) buffLen);
-  if (receiveLen < buffLen) {
-    return WIRED_CONTROLLER_ASUKIAAA_CANNOT_READ;
-  }
+
 #ifdef DEBUG
   Serial.print("received:");
 #endif
@@ -42,6 +40,10 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
 #ifdef DEBUG
   Serial.println("");
 #endif
+
+  if (receiveLen < buffLen) {
+    return WIRED_CONTROLLER_ASUKIAAA_CANNOT_READ;
+  }
 
   uint8_t buttons = buff[0];
   rInfo->btnTop     = ((buttons & 0b0001) != 0);
