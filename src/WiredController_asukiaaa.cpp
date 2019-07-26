@@ -19,7 +19,7 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
     return result;
   }
   static const uint8_t buffLen = 5;
-   uint8_t buff[buffLen];
+  uint8_t buff[buffLen];
   uint8_t buffIndex = 0;
   uint8_t receiveLen = wire->requestFrom(WIRED_CONTROLLER_ASUKIAAA_ADDRESS, (int) buffLen);
   if (receiveLen < buffLen) {
