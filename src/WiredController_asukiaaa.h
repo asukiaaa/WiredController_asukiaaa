@@ -18,6 +18,7 @@
 #define JOYSTICK_MAX_VALUE 1000
 
 #define WIRED_CONTROLLER_ASUKIAAA_CANNOT_READ 5
+#define WIRED_CONTROLLER_ASUKIAAA_BROKEN_DATA 6
 
 typedef struct {
   uint16_t joystickHorizontal;
