@@ -19,11 +19,11 @@ void setup() {
   }
 }
 
-void printBooleanResult(bool target) {
+void printlnBooleanResult(bool target) {
   if (target) {
-    Serial.print("true");
+    Serial.println("true");
   } else {
-    Serial.print("false");
+    Serial.println("false");
   }
 }
 
@@ -41,15 +41,15 @@ void loop() {
     Serial.println("JoystickHorizontal: " + String(rInfo.joystickHorizontal));
     Serial.println("JoystickVertical: " + String(rInfo.joystickVertical));
     Serial.print("btnTop: ");
-    printBooleanResult(rInfo.btnTop);
+    printlnBooleanResult(rInfo.btnTop);
     Serial.print("btnLeft: ");
-    printBooleanResult(rInfo.btnLeft);
+    printlnBooleanResult(rInfo.btnLeft);
     Serial.print("btnRight: ");
-    printBooleanResult(rInfo.btnRight);
+    printlnBooleanResult(rInfo.btnRight);
     Serial.print("btnBottom: ");
-    printBooleanResult(rInfo.btnBottom);
+    printlnBooleanResult(rInfo.btnBottom);
   } else {
     Serial.println("Cannot read info from controller.");
   }
-  delay(50);
+  delay(100);
 }
