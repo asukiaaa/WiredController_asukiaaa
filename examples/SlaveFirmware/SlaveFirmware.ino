@@ -5,8 +5,10 @@
 #define BTN_LEFT   5
 #define BTN_RIGHT  6
 #define BTN_BOTTOM 7
-#define LED_1 8
-#define LED_2 9
+#define LED_1 9
+#define LED_2 10
+#define LED_3 0
+#define LED_4 1
 #define JOYSTICK_HORIZONTAL_MIDDLE A0
 #define JOYSTICK_HORIZONTAL_UPPER A1
 // #define JOYSTICK_HORIZONTAL_REVERSE
@@ -63,6 +65,8 @@ void updateLeds() {
   uint8_t val = registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS];
   digitalWrite(LED_1, ((val & 0b0001) != 0));
   digitalWrite(LED_2, ((val & 0b0010) != 0));
+  digitalWrite(LED_3, ((val & 0b0100) != 0));
+  digitalWrite(LED_4, ((val & 0b1000) != 0));
 }
 
 void onReceive(int howMany) {
@@ -110,12 +114,14 @@ void setup() {
   pinMode(BTN_JOY, INPUT_PULLUP);
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
+  pinMode(LED_3, OUTPUT);
+  pinMode(LED_4, OUTPUT);
 
 #ifdef DEBUG
   Serial.begin(115200);
 #endif
 
-  registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS] = 0;
+  registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS] = 1;
   updateLeds();
 
   Wire.begin(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);

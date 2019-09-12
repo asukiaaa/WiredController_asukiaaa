@@ -33,6 +33,8 @@ typedef struct {
 typedef struct {
   bool led1;
   bool led2;
+  bool led3;
+  bool led4;
 } WiredController_asukiaaa_WriteInfo;
 
 class WiredController_asukiaaa {

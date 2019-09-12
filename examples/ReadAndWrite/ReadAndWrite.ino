@@ -27,10 +27,31 @@ void printlnBooleanResult(bool target) {
   }
 }
 
+uint8_t ledCount = 0;
+
 void loop() {
   if (millis() - wroteAt > WRITE_INTERVAL_MS) {
     wroteAt = millis();
-    wInfo.led1 = !wInfo.led1;
+    ++ledCount;
+    if (ledCount > 4) ledCount = 0;
+    wInfo.led1 = false;
+    wInfo.led2 = false;
+    wInfo.led3 = false;
+    wInfo.led4 = false;
+    switch(ledCount) {
+    case 1:
+      wInfo.led1 = true;
+      break;
+    case 2:
+      wInfo.led2 = true;
+      break;
+    case 3:
+      wInfo.led3 = true;
+      break;
+    case 4:
+      wInfo.led4 = true;
+      break;
+    }
     if (controller.write(wInfo) == 0) {
       Serial.println("Wrote info to controller.");
     } else {

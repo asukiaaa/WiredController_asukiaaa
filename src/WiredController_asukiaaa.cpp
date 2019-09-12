@@ -5,9 +5,15 @@ WiredController_asukiaaa::WiredController_asukiaaa(TwoWire* wire) {
 }
 
 uint8_t WiredController_asukiaaa::write(WiredController_asukiaaa_WriteInfo wInfo) {
+  uint8_t ledState = 0;
+  if (wInfo.led1) ledState |= 0b0001;
+  if (wInfo.led2) ledState |= 0b0010;
+  if (wInfo.led3) ledState |= 0b0100;
+  if (wInfo.led4) ledState |= 0b1000;
+
   wire->beginTransmission(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
   wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS);
-  wire->write(wInfo.led1 ? 1 : 0);
+  wire->write(ledState);
   return wire->endTransmission();
 }
 
