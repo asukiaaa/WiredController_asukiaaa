@@ -48,6 +48,8 @@ void loop() {
     printlnBooleanResult(rInfo.btnRight);
     Serial.print("btnBottom: ");
     printlnBooleanResult(rInfo.btnBottom);
+    Serial.print("btnJoy: ");
+    printlnBooleanResult(rInfo.btnJoy);
   } else {
     Serial.println("Cannot read info from controller.");
   }

@@ -52,10 +52,11 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
     return WIRED_CONTROLLER_ASUKIAAA_BROKEN_DATA;
   }
 
-  rInfo->btnTop     = ((buttons & 0b0001) != 0);
-  rInfo->btnLeft    = ((buttons & 0b0010) != 0);
-  rInfo->btnRight   = ((buttons & 0b0100) != 0);
-  rInfo->btnBottom  = ((buttons & 0b1000) != 0);
+  rInfo->btnTop     = ((buttons & 0b00000001) != 0);
+  rInfo->btnLeft    = ((buttons & 0b00000010) != 0);
+  rInfo->btnRight   = ((buttons & 0b00000100) != 0);
+  rInfo->btnBottom  = ((buttons & 0b00001000) != 0);
+  rInfo->btnJoy     = ((buttons & 0b00010000) != 0);
   rInfo->joystickVertical = vertValue;
   rInfo->joystickHorizontal = horiValue;
 

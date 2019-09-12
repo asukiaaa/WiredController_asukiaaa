@@ -27,6 +27,7 @@ typedef struct {
   bool btnLeft;
   bool btnRight;
   bool btnBottom;
+  bool btnJoy;
 } WiredController_asukiaaa_ReadInfo;
 
 typedef struct {

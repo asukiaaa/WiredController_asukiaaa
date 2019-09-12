@@ -13,6 +13,7 @@
 #define JOYSTICK_VERTICAL_MIDDLE A2
 #define JOYSTICK_VERTICAL_UPPER A3
 // #define JOYSTICK_VERITCAL_REVERSE
+#define BTN_JOY 2 // Disable this for atmega32u4
 #define ANALOG_MAX 1023
 
 #define RESISTER_JOYSTICK 10000
@@ -106,6 +107,7 @@ void setup() {
   pinMode(BTN_LEFT, INPUT_PULLUP);
   pinMode(BTN_RIGHT, INPUT_PULLUP);
   pinMode(BTN_BOTTOM, INPUT_PULLUP);
+  pinMode(BTN_JOY, INPUT_PULLUP);
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
 
@@ -134,10 +136,11 @@ void updateJoystickRegisters() {
 
 void updateButtonRegister() {
   uint8_t val = 0x00;
-  if (pushed(BTN_TOP))    val |= 0b0001;
-  if (pushed(BTN_LEFT))   val |= 0b0010;
-  if (pushed(BTN_RIGHT))  val |= 0b0100;
-  if (pushed(BTN_BOTTOM)) val |= 0b1000;
+  if (pushed(BTN_TOP))    val |= 0b0000001;
+  if (pushed(BTN_LEFT))   val |= 0b0000010;
+  if (pushed(BTN_RIGHT))  val |= 0b0000100;
+  if (pushed(BTN_BOTTOM)) val |= 0b0001000;
+  if (pushed(BTN_JOY))    val |= 0b0010000;
   registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_BUTTONS] = val;
 }
 
