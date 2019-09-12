@@ -40,7 +40,8 @@ uint16_t getJoystickValue(uint8_t upperPin, uint8_t middlePin) {
   }
   uint32_t v = analogRead(middlePin);
   v = JOYSTICK_MAX_VALUE * v / ANALOG_MAX;
-  return v * (RESISTER_JOYSTICK + RESISTER_UPPER_FAIL_SAFE) / RESISTER_JOYSTICK;
+  v = v * (RESISTER_JOYSTICK + RESISTER_UPPER_FAIL_SAFE) / RESISTER_JOYSTICK;
+  return min(v, JOYSTICK_MAX_VALUE);
 }
 
 int16_t getJoystickHorizontalValue() {
