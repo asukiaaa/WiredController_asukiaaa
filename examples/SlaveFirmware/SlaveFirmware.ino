@@ -16,6 +16,8 @@
 #define JOYSTICK_VERTICAL_UPPER A3
 #define JOYSTICK_VERITCAL_REVERSE
 #define BTN_JOY 2 // Disable this for atmega32u4
+#define ADDR_JUMPER 8
+
 #define ANALOG_MAX 1023
 
 #define RESISTER_JOYSTICK 10000
@@ -113,6 +115,7 @@ void setup() {
   pinMode(BTN_RIGHT, INPUT_PULLUP);
   pinMode(BTN_BOTTOM, INPUT_PULLUP);
   pinMode(BTN_JOY, INPUT_PULLUP);
+  pinMode(ADDR_JUMPER, INPUT_PULLUP);
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
   pinMode(LED_3, OUTPUT);
@@ -125,7 +128,7 @@ void setup() {
   registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS] = 1;
   updateLeds();
 
-  Wire.begin(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
+  Wire.begin(digitalRead(ADDR_JUMPER) == HIGH ? WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT : WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED);
   Wire.onReceive(onReceive);
   Wire.onRequest(onRequest);
 }

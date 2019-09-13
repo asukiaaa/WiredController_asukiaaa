@@ -5,6 +5,7 @@
 unsigned long wroteAt = 0;
 
 WiredController_asukiaaa controller(&Wire);
+// WiredController_asukiaaa controller(&Wire, WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED); // when connected JP1
 WiredController_asukiaaa_WriteInfo wInfo;
 WiredController_asukiaaa_ReadInfo rInfo;
 

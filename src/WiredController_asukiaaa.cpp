@@ -1,7 +1,8 @@
 #include "WiredController_asukiaaa.h"
 
-WiredController_asukiaaa::WiredController_asukiaaa(TwoWire* wire) {
+WiredController_asukiaaa::WiredController_asukiaaa(TwoWire* wire, int address) {
   this->wire = wire;
+  this->address = address;
 }
 
 uint8_t WiredController_asukiaaa::write(WiredController_asukiaaa_WriteInfo wInfo) {
@@ -11,14 +12,14 @@ uint8_t WiredController_asukiaaa::write(WiredController_asukiaaa_WriteInfo wInfo
   if (wInfo.led3) ledState |= 0b0100;
   if (wInfo.led4) ledState |= 0b1000;
 
-  wire->beginTransmission(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
+  wire->beginTransmission(address);
   wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS);
   wire->write(ledState);
   return wire->endTransmission();
 }
 
 uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo) {
-  wire->beginTransmission(WIRED_CONTROLLER_ASUKIAAA_ADDRESS);
+  wire->beginTransmission(address);
   wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_BUTTONS);
   uint8_t result = wire->endTransmission();
   if (result != 0) {
@@ -27,7 +28,7 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
   static const uint8_t buffLen = 5;
   uint8_t buff[buffLen];
   uint8_t buffIndex = 0;
-  uint8_t receiveLen = wire->requestFrom(WIRED_CONTROLLER_ASUKIAAA_ADDRESS, (int) buffLen);
+  uint8_t receiveLen = wire->requestFrom(address, (int) buffLen);
 
 #ifdef DEBUG
   Serial.print("received:");
