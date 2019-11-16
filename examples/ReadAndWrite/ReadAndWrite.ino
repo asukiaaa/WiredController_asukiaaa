@@ -20,12 +20,8 @@ void setup() {
   }
 }
 
-void printlnBooleanResult(bool target) {
-  if (target) {
-    Serial.println("true");
-  } else {
-    Serial.println("false");
-  }
+String getBooleanResultStr(bool target) {
+  return target ? "true" : "false";
 }
 
 uint8_t ledCount = 0;
@@ -62,16 +58,11 @@ void loop() {
   if (controller.read(&rInfo) == 0) {
     Serial.println("JoystickHorizontal: " + String(rInfo.joystickHorizontal));
     Serial.println("JoystickVertical: " + String(rInfo.joystickVertical));
-    Serial.print("btnTop: ");
-    printlnBooleanResult(rInfo.btnTop);
-    Serial.print("btnLeft: ");
-    printlnBooleanResult(rInfo.btnLeft);
-    Serial.print("btnRight: ");
-    printlnBooleanResult(rInfo.btnRight);
-    Serial.print("btnBottom: ");
-    printlnBooleanResult(rInfo.btnBottom);
-    Serial.print("btnJoy: ");
-    printlnBooleanResult(rInfo.btnJoy);
+    Serial.println("btnTop: " + getBooleanResultStr(rInfo.btnTop));
+    Serial.println("btnLeft: " + getBooleanResultStr(rInfo.btnLeft));
+    Serial.println("btnRight: " + getBooleanResultStr(rInfo.btnRight));
+    Serial.println("btnBottom: " + getBooleanResultStr(rInfo.btnBottom));
+    Serial.println("btnJoy: " + getBooleanResultStr(rInfo.btnJoy));
   } else {
     Serial.println("Cannot read info from controller.");
   }
