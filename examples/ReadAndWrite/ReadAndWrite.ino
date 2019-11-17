@@ -24,13 +24,13 @@ String getBooleanResultStr(bool target) {
   return target ? "true" : "false";
 }
 
-uint8_t ledCount = 0;
+uint8_t ledCount = 1;
 
 void loop() {
   if (millis() - wroteAt > WRITE_INTERVAL_MS) {
     wroteAt = millis();
     ++ledCount;
-    if (ledCount > 4) ledCount = 0;
+    if (ledCount > 4) ledCount = 1;
     wInfo.led1 = false;
     wInfo.led2 = false;
     wInfo.led3 = false;
@@ -50,7 +50,7 @@ void loop() {
       break;
     }
     if (controller.write(wInfo) == 0) {
-      Serial.println("Wrote info to controller.");
+      Serial.println("Wrote info to turn on led " + String(ledCount));
     } else {
       Serial.println("Cannot write info to controller.");
     }
