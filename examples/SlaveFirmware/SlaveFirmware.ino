@@ -1,10 +1,18 @@
 #include <Wire.h>
 #include <WiredController_asukiaaa.h>
 
+#ifndef BTN_TOP
 #define BTN_TOP    4
+#endif
+#ifndef BTN_LEFT
 #define BTN_LEFT   5
+#endif
+#ifndef BTN_RIGHT
 #define BTN_RIGHT  6
+#endif
+#ifndef BTN_BOTTOM
 #define BTN_BOTTOM 7
+#endif
 #define LED_1 9
 #define LED_2 10
 #define LED_3 0
