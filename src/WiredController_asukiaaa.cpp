@@ -55,7 +55,7 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
   uint8_t buttons = buff[0];
   uint16_t vertValue = ((uint16_t) buff[1]) << 8 | (uint16_t) buff[2];
   uint16_t horiValue = ((uint16_t) buff[3]) << 8 | (uint16_t) buff[4];
-  if (vertValue > JOYSTICK_MAX_VALUE || horiValue > JOYSTICK_MAX_VALUE) {
+  if (vertValue > WIRED_CONTROLLER_ASUKIAAA_JOYSTICK_MAX_VALUE || horiValue > WIRED_CONTROLLER_ASUKIAAA_JOYSTICK_MAX_VALUE) {
     return WIRED_CONTROLLER_ASUKIAAA_BROKEN_DATA;
   }
 
