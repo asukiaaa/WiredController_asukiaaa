@@ -1,0 +1,36 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+WiredController_asukiaaa	KEYWORD1
+WiredController_asukiaaa_WriteInfo	KEYWORD1
+WiredController_asukiaaa_ReadInfo	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+write	KEYWORD2
+read	KEYWORD2
+joystickHorizontal	KEYWORD2
+joystickVertical	KEYWORD2
+btnTop	KEYWORD2
+btnLeft	KEYWORD2
+btnRight	KEYWORD2
+btnBottom	KEYWORD2
+btnJoy	KEYWORD2
+led1	KEYWORD2
+led2	KEYWORD2
+led3	KEYWORD2
+led4	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT	KEYWORD3
+WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED	KEYWORD3
