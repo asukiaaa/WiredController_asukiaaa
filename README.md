@@ -19,3 +19,8 @@ See [read and write example](./examples/ReadAndWrite/ReadAndWrite.ino) and [head
 # License
 
 MIT
+
+# References
+
+- [WiredController - SwitchSceince](https://www.switch-science.com/catalog/5950/)
+- [WiredControllerPCB](https://github.com/asukiaaa/WiredControllerPcb)
