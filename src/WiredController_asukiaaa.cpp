@@ -25,6 +25,7 @@ uint8_t WiredController_asukiaaa::read(WiredController_asukiaaa_ReadInfo *rInfo)
   if (result != 0) {
     return result;
   }
+  delay(10);
   static const uint8_t buffLen = 5;
   uint8_t buff[buffLen];
   uint8_t buffIndex = 0;
