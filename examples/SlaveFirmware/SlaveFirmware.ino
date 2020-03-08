@@ -138,6 +138,11 @@ void setup() {
   updateLeds();
 
   Wire.begin(digitalRead(ADDR_JUMPER) == HIGH ? WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT : WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED);
+
+  // Disable pull up for I2C pins
+  pinMode(SDA, INPUT);
+  pinMode(SCL, INPUT);
+
   Wire.onReceive(onReceive);
   Wire.onRequest(onRequest);
 }
