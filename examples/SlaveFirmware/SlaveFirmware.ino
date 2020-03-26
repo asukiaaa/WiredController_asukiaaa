@@ -104,9 +104,6 @@ void onReceive(int howMany) {
     }
     ++receivedLen;
   }
-  if (changedLedsRegister) {
-    updateLeds();
-  }
 #ifdef DEBUG
   Serial.println("");
 #endif
@@ -173,5 +170,6 @@ void updateButtonRegister() {
 void loop() {
   updateJoystickRegisters();
   updateButtonRegister();
+  updateLeds();
   delay(20);
 }
