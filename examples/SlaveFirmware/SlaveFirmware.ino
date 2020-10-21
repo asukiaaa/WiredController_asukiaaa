@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include <WiredController_asukiaaa.h>
+#include <avr/wdt.h>
 
 #ifndef BTN_TOP
 #define BTN_TOP    4
@@ -82,6 +83,7 @@ void updateLeds() {
 }
 
 void onReceive(int howMany) {
+  wdt_reset();
 #ifdef DEBUG
   Serial.print("onReceive:");
 #endif
@@ -144,6 +146,8 @@ void setup() {
 
   Wire.onReceive(onReceive);
   Wire.onRequest(onRequest);
+
+  wdt_enable(WDTO_1S);
 }
 
 void updateJoystickRegisters() {
