@@ -29,6 +29,7 @@ typedef struct {
   bool btnRight;
   bool btnBottom;
   bool btnJoy;
+  int stateRead = -1;
 } WiredController_asukiaaa_ReadInfo;
 
 typedef struct {
@@ -42,7 +43,7 @@ class WiredController_asukiaaa {
  public:
   WiredController_asukiaaa(TwoWire* wire, int address = WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT);
   uint8_t write(WiredController_asukiaaa_WriteInfo wInfo);
-  uint8_t read(WiredController_asukiaaa_ReadInfo *rInfo);
+  int read(WiredController_asukiaaa_ReadInfo *rInfo);
 
  private:
   TwoWire* wire;
