@@ -1,18 +1,19 @@
 #include <WiredController_asukiaaa.h>
 
 WiredController_asukiaaa controller(&Wire);
-// WiredController_asukiaaa controller(&Wire, WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED); // when connected JP1
+// WiredController_asukiaaa controller(&Wire,
+// WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED); // when connected JP1
 WiredController_asukiaaa_WriteInfo wInfo;
 WiredController_asukiaaa_ReadInfo rInfo;
 
 void setup() {
   Serial.begin(115200);
   Wire.begin();
+  // controller.setUseCRC8(true);  // CRC8 is supported for
+  // protocol version 1 or more
 }
 
-String getBooleanResultStr(bool target) {
-  return target ? "true" : "false";
-}
+String getBooleanResultStr(bool target) { return target ? "true" : "false"; }
 
 void loop() {
   int targetLedIndex = (millis() / 1000) % 4;
@@ -20,19 +21,19 @@ void loop() {
   wInfo.led2 = false;
   wInfo.led3 = false;
   wInfo.led4 = false;
-  switch(targetLedIndex) {
-  case 0:
-    wInfo.led1 = true;
-    break;
-  case 1:
-    wInfo.led2 = true;
-    break;
-  case 2:
-    wInfo.led3 = true;
-    break;
-  case 3:
-    wInfo.led4 = true;
-    break;
+  switch (targetLedIndex) {
+    case 0:
+      wInfo.led1 = true;
+      break;
+    case 1:
+      wInfo.led2 = true;
+      break;
+    case 2:
+      wInfo.led3 = true;
+      break;
+    case 3:
+      wInfo.led4 = true;
+      break;
   }
 
   if (controller.write(wInfo) == 0) {
@@ -49,8 +50,10 @@ void loop() {
     Serial.println("btnRight: " + getBooleanResultStr(rInfo.btnRight));
     Serial.println("btnBottom: " + getBooleanResultStr(rInfo.btnBottom));
     Serial.println("btnJoy: " + getBooleanResultStr(rInfo.btnJoy));
+    Serial.println("protocolVersion:" + String(rInfo.protocolVersion));
   } else {
-    Serial.println("Cannot read info from controller.");
+    Serial.println("Cannot read info from controller. Error: " +
+                   String(rInfo.stateRead));
   }
 
   Serial.println("At " + String(millis()));
