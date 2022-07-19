@@ -9,6 +9,8 @@ WiredController_asukiaaa_ReadInfo rInfo;
 void setup() {
   M5.begin();
   M5.Lcd.setTextSize(2);
+  // controller.useCRC(true);  // CRC is supported for
+  // protocol version 1 or more
   Wire.begin();
   if (controller.write(wInfo) != 0) {
     Serial.println("Failed to initial writing");

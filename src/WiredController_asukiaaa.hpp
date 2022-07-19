@@ -19,14 +19,14 @@
 #define WIRED_CONTROLLER_ASUKIAAA_REGISTER_JOY_HORI_UPPER 0x04
 #define WIRED_CONTROLLER_ASUKIAAA_REGISTER_JOY_HORI_LOWER 0x05
 #define WIRED_CONTROLLER_ASUKIAAA_REGISTER_PROTOCOL_VERSION 0x06
-#define WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC8 0x07
+#define WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC 0x07
 
-#define WIRED_CONTROLLER_ASUKIAAA_REGISTER_LENGTH 0x08
+#define WIRED_CONTROLLER_ASUKIAAA_REGISTER_LENGTH 0x09
 #define WIRED_CONTROLLER_ASUKIAAA_JOYSTICK_MAX_VALUE 1000
 
 #define WIRED_CONTROLLER_ASUKIAAA_CANNOT_READ 5
 #define WIRED_CONTROLLER_ASUKIAAA_BROKEN_DATA 6
-#define WIRED_CONTROLLER_ASUKIAAA_UNMATCH_CRC8 10
+#define WIRED_CONTROLLER_ASUKIAAA_UNMATCH_CRC 10
 
 typedef struct {
   uint16_t joystickHorizontal;
@@ -55,7 +55,7 @@ class WiredController_asukiaaa {
     this->address = address;
   }
 
-  void setUseCRC8(bool useCRC8) { this->useCRC8 = useCRC8; }
+  void useCRC(bool useCRC) { this->usingCRC = useCRC; }
 
   uint8_t write(WiredController_asukiaaa_WriteInfo wInfo) {
     uint8_t ledState = 0;
@@ -101,10 +101,11 @@ class WiredController_asukiaaa {
       return rInfo->stateRead;
     }
 
-    if (useCRC8 &&
-        buff[WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC8] !=
-            crcx::crc8(buff, WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC8)) {
-      return rInfo->stateRead = WIRED_CONTROLLER_ASUKIAAA_UNMATCH_CRC8;
+    if (usingCRC &&
+        ((uint16_t)buff[WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC] << 8 |
+         buff[WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC + 1]) !=
+            crcx::crc16(buff, WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC)) {
+      return rInfo->stateRead = WIRED_CONTROLLER_ASUKIAAA_UNMATCH_CRC;
     }
 
     uint8_t buttons = buff[WIRED_CONTROLLER_ASUKIAAA_REGISTER_BUTTONS];
@@ -144,7 +145,7 @@ class WiredController_asukiaaa {
  private:
   TwoWire* wire;
   int address;
-  bool useCRC8 = false;
+  bool usingCRC = false;
   static const uint8_t buffLen = WIRED_CONTROLLER_ASUKIAAA_REGISTER_LENGTH;
   uint8_t buff[buffLen];
 };

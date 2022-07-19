@@ -82,9 +82,11 @@ void updateLeds() {
   digitalWrite(LED_4, ((val & 0b1000) != 0));
 }
 
-void updateCRC8() {
-  registers[WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC8] =
-      crcx::crc8(registers, WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC8);
+void updateCRC16() {
+  uint8_t addrCrcStart = WIRED_CONTROLLER_ASUKIAAA_REGISTER_CRC;
+  uint16_t crc = crcx::crc16(registers, addrCrcStart);
+  registers[addrCrcStart] = crc >> 8;
+  registers[addrCrcStart + 1] = crc & 0xff;
 }
 
 void onReceive(int howMany) {
@@ -111,7 +113,7 @@ void onReceive(int howMany) {
     }
     ++receivedLen;
   }
-  updateCRC8();
+  updateCRC16();
 #ifdef DEBUG
   Serial.println("");
 #endif

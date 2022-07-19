@@ -9,7 +9,7 @@ WiredController_asukiaaa_ReadInfo rInfo;
 void setup() {
   Serial.begin(115200);
   Wire.begin();
-  // controller.setUseCRC8(true);  // CRC8 is supported for
+  // controller.useCRC(true);  // CRC is supported for
   // protocol version 1 or more
 }
 
