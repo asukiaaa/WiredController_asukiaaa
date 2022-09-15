@@ -73,7 +73,7 @@ class WiredController_asukiaaa {
   int read(WiredController_asukiaaa_ReadInfo* rInfo) {
     wire->beginTransmission(address);
     wire->write(0);
-    rInfo->stateRead = wire->endTransmission();
+    rInfo->stateRead = wire->endTransmission(false);
     if (rInfo->stateRead != 0) {
       return rInfo->stateRead;
     }
