@@ -1,6 +1,7 @@
 #include <WiredController_asukiaaa.h>
 
-WiredController_asukiaaa controller(&Wire);
+#define WIRE_TO_USE Wire
+WiredController_asukiaaa controller(&WIRE_TO_USE);
 // WiredController_asukiaaa controller(&Wire,
 // WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED); // when connected JP1
 WiredController_asukiaaa_WriteInfo wInfo;
@@ -8,7 +9,7 @@ WiredController_asukiaaa_ReadInfo rInfo;
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin();
+  WIRE_TO_USE.begin();
   // controller.useCRC(true);  // CRC is supported for
   // protocol version 1 or more
 }
