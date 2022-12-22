@@ -49,10 +49,13 @@ typedef struct {
 
 class WiredController_asukiaaa {
  public:
+  TwoWire* wire;
+  const int address;
+
   WiredController_asukiaaa(
-      TwoWire* wire, int address = WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT) {
+      TwoWire* wire, int address = WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT)
+      : address(address) {
     this->wire = wire;
-    this->address = address;
   }
 
   void useCRC(bool useCRC) { this->usingCRC = useCRC; }
@@ -143,8 +146,6 @@ class WiredController_asukiaaa {
   }
 
  private:
-  TwoWire* wire;
-  int address;
   bool usingCRC = false;
   static const uint8_t buffLen = WIRED_CONTROLLER_ASUKIAAA_REGISTER_LENGTH;
   uint8_t buff[buffLen];
