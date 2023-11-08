@@ -3,12 +3,7 @@
 
 #include <CRCx.h>
 #include <Wire.h>
-
-// #define DEBUG
-
-#ifdef DEBUG
-#include <Arduino.h>
-#endif
+#include <wire_asukiaaa.h>
 
 #define WIRED_CONTROLLER_ASUKIAAA_ADDRESS_DEFAULT 0x20
 #define WIRED_CONTROLLER_ASUKIAAA_ADDRESS_JUMPER_CONNECTED 0x21
@@ -67,40 +62,14 @@ class WiredController_asukiaaa {
     if (wInfo.led3) ledState |= 0b0100;
     if (wInfo.led4) ledState |= 0b1000;
 
-    wire->beginTransmission(address);
-    wire->write(WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS);
-    wire->write(ledState);
-    return wire->endTransmission();
+    return wire_asukiaaa::writeBytes(
+        wire, address, WIRED_CONTROLLER_ASUKIAAA_REGISTER_LEDS, &ledState, 1);
   }
 
   int read(WiredController_asukiaaa_ReadInfo* rInfo) {
-    wire->beginTransmission(address);
-    wire->write(0);
-    rInfo->stateRead = wire->endTransmission(false);
+    rInfo->stateRead =
+        wire_asukiaaa::readBytes(wire, address, 0, buff, buffLen);
     if (rInfo->stateRead != 0) {
-      return rInfo->stateRead;
-    }
-    uint8_t buffIndex = 0;
-    uint8_t receiveLen = wire->requestFrom(address, (int)buffLen);
-
-#ifdef DEBUG
-    Serial.print("received:");
-#endif
-    while (wire->available() > 0) {
-      uint8_t d = wire->read();
-      if (buffIndex < buffLen) {
-        buff[buffIndex++] = d;
-      }
-#ifdef DEBUG
-      Serial.print(" ");
-      Serial.print(d, HEX);
-#endif
-    }
-#ifdef DEBUG
-    Serial.println("");
-#endif
-    if (receiveLen < buffLen) {
-      rInfo->stateRead = WIRED_CONTROLLER_ASUKIAAA_CANNOT_READ;
       return rInfo->stateRead;
     }
 
@@ -135,12 +104,6 @@ class WiredController_asukiaaa {
     rInfo->joystickHorizontal = horiValue;
     rInfo->protocolVersion =
         buff[WIRED_CONTROLLER_ASUKIAAA_REGISTER_PROTOCOL_VERSION];
-
-#ifdef DEBUG
-    Serial.println("joystick");
-    Serial.println(rInfo->joystickVertical);
-    Serial.println(rInfo->joystickHorizontal);
-#endif
 
     return rInfo->stateRead;
   }
